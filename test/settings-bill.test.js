@@ -5,7 +5,10 @@ let settingsbill = require("../settings-bill");
 
 describe('getActualCost function', function () {
 
+    
     it("should return the actual cost for call total", function () {
+
+
         let getCost = settingsbill();
         getCost.setCallCost(2.55)
 
