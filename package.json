@@ -1,0 +1,32 @@
+{
+  "name": "express-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "KhanyisoCairo",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-flash": "0.0.2",
+    "express-handlebars": "^3.1.0",
+    "express-session": "^1.16.2"
+  },
+  "devDependencies": {
+    "mustache": "^3.0.3",
+    "nodemon": "^1.19.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KhanyisoCairo/express-app.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/KhanyisoCairo/express-app/issues"
+  },
+  "homepage": "https://github.com/KhanyisoCairo/express-app#readme"
+}
