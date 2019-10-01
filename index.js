@@ -23,10 +23,10 @@ app.set('view engine', 'handlebars');
 app.use(express.static('public'));
 
 
-// parse application/x-www-form-urlencoded
+
 app.use(bodyParser.urlencoded({ extended: false }))
 
-// parse application/json
+
 app.use(bodyParser.json())
 
 
@@ -50,13 +50,13 @@ app.post('/settings', function (req, res) {
 app.post('/action', function (req, res) {
     const actionType = req.body.actionType
     settingsBill.getActualCost(actionType)
-    //    settingsBill.populateActionList(req.body.actionType);
+
     res.redirect("/");
 
 });
 app.get('/actions/:actionType', function (req, res) {
     const actionType = req.params.actionType
-
+     
     res.render('actions', { actions: settingsBill.getActionList()  });
 });
 
@@ -67,7 +67,7 @@ app.get('/actions', function (req, res) {
     
 });
 
-const PORT = process.env.PORT || 3011;
+const PORT = process.env.PORT || 3090;
 app.listen(PORT, function () {
 
     console.log("App started at port:", PORT)

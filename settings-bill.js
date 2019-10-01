@@ -14,18 +14,18 @@ module.exports = function FactoryBillSettings() {
     function updateSettings(billSettings) {
         callCost = Number(billSettings.callCost);
         smsCost = Number(billSettings.smsCost);
-        warningLevel = Number(billSettings.warningLevel);
-        criticalLevel = Number(billSettings.criticalLevel);
+        warningLevel = (billSettings.warningLevel);
+        criticalLevel = (billSettings.criticalLevel);
         console.log(billSettings)
     }
 
 
     function getActualCost(theAction) {
         let costOfActionAtThisPoint = 0;
-        if (theAction == "sms") {
-
-            if (newGrandTotal + smsCost > criticalLevel) {
-
+        if (theAction === "sms") {
+           
+            if (newGrandTotal + smsCost >= criticalLevel) {
+            
             } else {
                 let smsTemp = getTotalSms() + smsCost;
                 setSmsTotal(smsTemp)
@@ -37,12 +37,11 @@ module.exports = function FactoryBillSettings() {
                 };
                 actionList.push(action);
             }
-
-
+           
         }
-        if (theAction == "call") {
+        if (theAction === "call") {
 
-            if (newGrandTotal + callCost > criticalLevel) {
+            if (newGrandTotal + callCost >= criticalLevel) {
 
             }
             else {
@@ -168,19 +167,11 @@ module.exports = function FactoryBillSettings() {
 
             return "warning";
         }
-        else if (newGrandTotal >= criticalLevel) {
+      else if (newGrandTotal >= criticalLevel && newGrandTotal >= warningLevel) {
 
             return "danger";
         }
-        else if (newGrandTotal + callCost > criticalLevel) {
-
-            return getCallCost() + 0;
-        }
-        else if (newGrandTotal + smsCost > criticalLevel) {
-
-            return getSmsCost() + 0;
-
-        }
+        
     }
     return {
         setCallCost, getCallCost,
