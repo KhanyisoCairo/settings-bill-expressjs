@@ -9,6 +9,27 @@ module.exports = function FactoryBillSettings() {
     let newSmsTotal = 0.00;
     let newGrandTotal = 0.00;
     var actionList = [];
+    // var moment = require('moment');
+    // moment().format()
+
+    // moment.updateLocale('en', {
+    //     relativeTime : {
+    //         future: "in %s",
+    //         past:   "%s ago",
+    //         s  : 'a few seconds',
+    //         ss : '%d seconds',
+    //         m:  "a minute",
+    //         mm: "%d minutes",
+    //         h:  "an hour",
+    //         hh: "%d hours",
+    //         d:  "a day",
+    //         dd: "%d days",
+    //         M:  "a month",
+    //         MM: "%d months",
+    //         y:  "a year",
+    //         yy: "%d years"
+    //     }
+    // });
 
     // var getCall = 0;
     // var getSms = 0;
@@ -25,19 +46,34 @@ module.exports = function FactoryBillSettings() {
     function getActualCost(theAction) {
         let costOfActionAtThisPoint = 0;
         if (theAction == "sms") {
-            let smsTemp = getTotalSms() + smsCost;
-            setSmsTotal(smsTemp)
-            let action = {
-                type: theAction,
-                cost: smsTemp,
-                //use moment for timestamp
-                timeStamp: new Date()
-            };
-            actionList.push(action);
+            if (newGrandTotal + smsCost >= criticalLevel) {
+
+                getTotalSms() + 0;
+
+
+            } else {
+                let smsTemp = getTotalSms() + smsCost;
+                setSmsTotal(smsTemp)
+                let action = {
+                    type: theAction,
+                    cost: smsTemp,
+                    //use moment for timestamp
+                    timeStamp: new Date()
+                    // moment().toDate().getTime()
+                };
+                actionList.push(action);
+            }
             // costOfActionAtThisPoint = smsCost;
 
         }
         if (theAction == "call") {
+           
+            if (newGrandTotal + callCost >= criticalLevel) {
+
+             getTotalCall() + 0;
+
+            }
+            else{
             let callTemp = getTotalCall() + callCost;
             setCallTotal(callTemp)
             let action = {
@@ -45,11 +81,13 @@ module.exports = function FactoryBillSettings() {
                 cost: callTemp,
                 //use moment for timestamp
                 timeStamp: new Date()
+                // moment().toDate().getTime()
             };
             actionList.push(action);
         }
+    }
         setTotal(getTotalSms(), getTotalCall());
-       
+
         return Number(costOfActionAtThisPoint)
 
 
@@ -60,7 +98,7 @@ module.exports = function FactoryBillSettings() {
     //         type: theAction,
     //         cost: getActualCost(theAction),
     //         //use moment for timestamp
-    //         timeStamp: new Date()
+    //         timeStamp: moment().toDate().getTime()
     //     };
     //     actionList.push(action);
     // }
@@ -73,6 +111,13 @@ module.exports = function FactoryBillSettings() {
         }
     }
 
+    function getActionList() {
+        return actionList;
+    }
+
+    // function sorting(type) {
+    //     return actionList.sorting((action) => action.type === type)
+    // }
     function setSmsTotal(value) {
         newSmsTotal = value
     }
@@ -117,7 +162,7 @@ module.exports = function FactoryBillSettings() {
     }
     function getWarningLevel() {
 
-        return warningLevel;
+        return newGrandTotal >= warningLevel;
     }
 
     function setCriticalLevel(critical) {
@@ -127,7 +172,7 @@ module.exports = function FactoryBillSettings() {
     }
 
     function getCriticalLevel() {
-        return criticalLevel;
+        return newGrandTotal >= criticalLevel;
 
     }
 
@@ -150,14 +195,18 @@ module.exports = function FactoryBillSettings() {
         return newSmsTotal;
     }
 
-    function setTotal(smsTotal , callTotal) {
-        newGrandTotal = smsTotal + callTotal 
+    function setTotal(smsTotal, callTotal) {
+        newGrandTotal = smsTotal + callTotal
+
     }
 
     function TotalCost() {
 
         return getCall + getSms;
     }
+
+
+
 
     function showColorLevel() {
 
@@ -168,8 +217,6 @@ module.exports = function FactoryBillSettings() {
         else if (newGrandTotal >= criticalLevel) {
 
             return "danger";
-        } else {
-            return " ";
         }
     }
     return {
@@ -190,9 +237,10 @@ module.exports = function FactoryBillSettings() {
         TotalCost,
         showColorLevel,
         updateSettings,
-        // populateActionList,
+        // sorting,
         getAllTotals,
         getValues,
-        getActualCost
+        getActualCost,
+        getActionList
     }
 }
