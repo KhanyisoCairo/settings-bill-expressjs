@@ -22,45 +22,45 @@ module.exports = function FactoryBillSettings() {
 
     function getActualCost(theAction) {
         let costOfActionAtThisPoint = 0;
-        if (newGrandTotal <= criticalLevel){
-        if (theAction === "sms") {
+        if (newGrandTotal <= criticalLevel) {
+            if (theAction === "sms") {
 
                 let smsTemp = getTotalSms() + smsCost;
                 setSmsTotal(smsTemp)
                 let action = {
                     type: theAction,
-                    cost: smsTemp,
+                    cost: smsTemp.toFixed(2),
                     timeStamp: new Date()
 
                 };
                 actionList.push(action);
-        }
-        if (theAction === "call") {
+            }
+            if (theAction === "call") {
 
                 let callTemp = getTotalCall() + callCost;
                 setCallTotal(callTemp)
                 let action = {
                     type: theAction,
-                    cost: callTemp,
+                    cost: callTemp.toFixed(2),
                     timeStamp: new Date()
 
                 };
                 actionList.push(action);
-        }
-    
-        setTotal(getTotalSms(), getTotalCall());
+            }
 
-        return Number(costOfActionAtThisPoint)
-    }
-    
+            setTotal(getTotalSms(), getTotalCall());
+
+            return Number(costOfActionAtThisPoint)
+        }
+
     }
 
 
     function getAllTotals() {
         return {
-            newCallTotal,
-            newSmsTotal,
-            newGrandTotal
+            newCallTotal: newCallTotal.toFixed(2),
+            newSmsTotal: newSmsTotal.toFixed(2),
+            newGrandTotal: newGrandTotal.toFixed(2)
         }
     }
 
@@ -93,7 +93,7 @@ module.exports = function FactoryBillSettings() {
     }
 
     function getCallCost() {
-        return callCost;
+        return callCost.toFixed(2);
 
     }
 
@@ -103,7 +103,7 @@ module.exports = function FactoryBillSettings() {
     }
 
     function getSmsCost() {
-        return smsCost;
+        return smsCost.toFixed(2);
 
     }
 
@@ -154,14 +154,15 @@ module.exports = function FactoryBillSettings() {
 
 
     function showColorLevel() {
+        if (newCallTotal >= 0) {
+            if (newGrandTotal >= warningLevel && newGrandTotal < criticalLevel) {
 
-        if (newGrandTotal >= warningLevel && newGrandTotal < criticalLevel) {
+                return "warning";
+            }
+            else if (newGrandTotal >= criticalLevel) {
 
-            return "warning";
-        }
-      else if (newGrandTotal >= criticalLevel ) {
-
-            return "danger";
+                return "danger";
+            }
         }
     }
     return {
