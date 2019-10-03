@@ -12,8 +12,8 @@ module.exports = function FactoryBillSettings() {
 
 
     function updateSettings(billSettings) {
-        callCost = Number(billSettings.callCost).toFixed(2);
-        smsCost = Number(billSettings.smsCost).toFixed(2);
+        callCost = Number(billSettings.callCost);
+        smsCost = Number(billSettings.smsCost);
         warningLevel = (billSettings.warningLevel);
         criticalLevel = (billSettings.criticalLevel);
         console.log(billSettings)
