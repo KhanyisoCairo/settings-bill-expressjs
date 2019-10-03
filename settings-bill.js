@@ -12,8 +12,8 @@ module.exports = function FactoryBillSettings() {
 
 
     function updateSettings(billSettings) {
-        callCost = Number(billSettings.callCost);
-        smsCost = Number(billSettings.smsCost);
+        callCost = Number(billSettings.callCost).toFixed(2);
+        smsCost = Number(billSettings.smsCost).toFixed(2);
         warningLevel = (billSettings.warningLevel);
         criticalLevel = (billSettings.criticalLevel);
         console.log(billSettings)
@@ -22,11 +22,9 @@ module.exports = function FactoryBillSettings() {
 
     function getActualCost(theAction) {
         let costOfActionAtThisPoint = 0;
+        if (newGrandTotal <= criticalLevel){
         if (theAction === "sms") {
-           
-            if (newGrandTotal + smsCost >= criticalLevel) {
-            
-            } else {
+
                 let smsTemp = getTotalSms() + smsCost;
                 setSmsTotal(smsTemp)
                 let action = {
@@ -36,15 +34,9 @@ module.exports = function FactoryBillSettings() {
 
                 };
                 actionList.push(action);
-            }
-           
         }
         if (theAction === "call") {
 
-            if (newGrandTotal + callCost >= criticalLevel) {
-
-            }
-            else {
                 let callTemp = getTotalCall() + callCost;
                 setCallTotal(callTemp)
                 let action = {
@@ -54,13 +46,13 @@ module.exports = function FactoryBillSettings() {
 
                 };
                 actionList.push(action);
-            }
         }
+    
         setTotal(getTotalSms(), getTotalCall());
 
         return Number(costOfActionAtThisPoint)
-
-
+    }
+    
     }
 
 
@@ -167,11 +159,10 @@ module.exports = function FactoryBillSettings() {
 
             return "warning";
         }
-      else if (newGrandTotal >= criticalLevel && newGrandTotal >= warningLevel) {
+      else if (newGrandTotal >= criticalLevel ) {
 
             return "danger";
         }
-        
     }
     return {
         setCallCost, getCallCost,

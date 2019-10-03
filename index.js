@@ -50,14 +50,13 @@ app.post('/settings', function (req, res) {
 app.post('/action', function (req, res) {
     const actionType = req.body.actionType
     settingsBill.getActualCost(actionType)
-
     res.redirect("/");
-
 });
 app.get('/actions/:actionType', function (req, res) {
-    const actionType = req.params.actionType
-     
+    // const actionType = req.params.actionType
     res.render('actions', { actions: settingsBill.getActionList()  });
+    console.log(settingsBill.getActionList());
+    
 });
 
 app.get('/actions', function (req, res) {
