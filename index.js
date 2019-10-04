@@ -10,6 +10,15 @@ const settingsBill = SettingsBill();
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main',
 helpers:{
+    // 'cost' : function(){
+
+    //     return cost;
+    // },
+    // 'type' : function(){
+
+    //     return .type;
+    // },
+   
     'timestamp' : function(){
 
         return moment(this.timeStamp).fromNow();
@@ -50,20 +59,24 @@ app.post('/action', function (req, res) {
     res.redirect("/");
 });
 app.get('/actions/:actionType', function (req, res) {
-    // const actionType = req.params.actionType
-    res.render('actions', { actions: settingsBill.getActionList()  });
-    console.log(settingsBill.getActionList());
+    const actionType = req.params.actionType
+    // console.log(actionType);
+
+    const actions = settingsBill.getActionList(actionType);
+    // console.log(actions,"actions line 66")    
+    res.render('actions', { actions });
+    // console.log(settingsBill.getActionList(actionType, "actionty line 68"));
     
 });
 
 app.get('/actions', function (req, res) {
     
     res.render('actions', { actions: settingsBill.getActionList() });
-    console.log(settingsBill.getActionList());
+    // console.log(settingsBill.getActionList(),"actions line 73");
     
 });
 
-const PORT = process.env.PORT || 3092;
+const PORT = process.env.PORT || 5006;
 app.listen(PORT, function () {
 
     console.log("App started at port:", PORT)
