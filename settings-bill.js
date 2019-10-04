@@ -154,7 +154,7 @@ module.exports = function FactoryBillSettings() {
 
 
     function showColorLevel() {
-        if (newCallTotal >= 0) {
+      
             if (newGrandTotal >= warningLevel && newGrandTotal < criticalLevel) {
 
                 return "warning";
@@ -163,7 +163,10 @@ module.exports = function FactoryBillSettings() {
 
                 return "danger";
             }
-        }
+            // else if (newCallTotal >= 0) {
+            //     return ""
+            // }
+        
     }
     return {
         setCallCost, getCallCost,

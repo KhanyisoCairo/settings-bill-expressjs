@@ -17,12 +17,9 @@ helpers:{
 
 } }));
 
-
 app.set('view engine', 'handlebars');
 
 app.use(express.static('public'));
-
-
 
 app.use(bodyParser.urlencoded({ extended: false }))
 
